@@ -18,7 +18,6 @@ namespace UpgradedShip
         public static int missileCount = 5;
         public static Transform baseTransform;
         private static TargetingCircle currentTargetingCircle;
-        private static ASCannonLaser laser;
         private static List<FPBaseEnemy> missileTargetedEnemies;
         public static List<TargetingReticle> reticles;
         public static AudioClip sfxMissile;
@@ -253,7 +252,7 @@ namespace UpgradedShip
             }
 
             Plugin.CircleID = FPStage.RegisterObjectType(Plugin.targetingCircle, typeof(TargetingCircle), 20);
-            Plugin.MissileID = FPStage.RegisterObjectType(Plugin.microMissile, typeof(BFFMicroMissile), 100);
+            Plugin.MissileID = FPStage.RegisterObjectType(Plugin.microMissile, typeof(BFFMicroMissile), 20);
             Plugin.ReticleID = FPStage.RegisterObjectType(Plugin.targetingReticle, typeof(TargetingReticle), 20);
 
             Plugin.position = __instance.position;
@@ -323,6 +322,12 @@ namespace UpgradedShip
                     __instance.weakPoint.invincibility = 10f;
                     __instance.weakPoint.health = __instance.weakPoint.initialHealth;
                     __instance.targetPlayer.energy -= 1f;
+                    __instance.moveSpeed = 400f;
+                }
+
+                if (!__instance.targetPlayer.input.attackHold)
+                {
+                    __instance.moveSpeed = 250f;
                 }
 
                 if (__instance.targetPlayer.energy < 1f && !cooldown)
